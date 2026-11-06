@@ -17,7 +17,7 @@ export default function CadastroCard({ cadastro, onPress }: Props) {
     <TouchableOpacity style={styles.card} onPress={onPress}>
       <Ionicons
         name={cadastro.tipo === 'PF' ? 'person-circle-outline' : 'business-outline'}
-        size={34}
+        size={40}
         color={theme.colors.primary}
       />
       <View style={{ flex: 1, marginLeft: 12 }}>
@@ -45,9 +45,9 @@ const styles = StyleSheet.create({
     padding: theme.spacing.md,
     marginBottom: theme.spacing.sm + 2,
   },
-  nome: { fontSize: 16, fontWeight: '600', color: theme.colors.text },
-  doc: { fontSize: 13, color: theme.colors.muted, marginTop: 2 },
-  docs: { fontSize: 12, marginTop: 4 },
+  nome: { fontSize: 16, fontWeight: '600', color: theme.colors.text, fontFamily: theme.fonts.regular },
+  doc: { fontSize: 13, fontFamily: theme.fonts.regular, color: theme.colors.muted, marginTop: 2 },
+  docs: { fontSize: 12, marginTop: 4, fontFamily: theme.fonts.regular },
   badge: { backgroundColor: theme.colors.background, borderRadius: 6, paddingHorizontal: 8, paddingVertical: 4 },
   badgeText: { fontSize: 12, fontWeight: '700', color: theme.colors.primary },
 });

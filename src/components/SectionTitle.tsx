@@ -12,5 +12,6 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     marginTop: theme.spacing.md,
     marginBottom: theme.spacing.md,
+    fontFamily: 'Poppins_600SemiBold',
   },
 });

@@ -22,7 +22,7 @@ export default function Input({ label, error, style, ...rest }: Props) {
 
 const styles = StyleSheet.create({
   wrapper: { marginBottom: theme.spacing.md },
-  label: { fontSize: 13, fontWeight: '600', color: theme.colors.text, marginBottom: 6 },
+  label: { fontSize: 13,fontFamily:theme.fonts.regular, fontWeight: '600', color: theme.colors.text, marginBottom: 6 },
   input: {
     backgroundColor: theme.colors.card,
     borderWidth: 1,
@@ -30,9 +30,11 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius.sm,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    fontSize: 15,
+    fontSize: 13,
     color: theme.colors.text,
+    fontFamily: 'Poppins_400Regular',
+    
   },
-  inputError: { borderColor: theme.colors.danger },
+  inputError: { borderColor: theme.colors.danger,fontFamily: 'Poppins_400Regular', },
   error: { color: theme.colors.danger, fontSize: 12, marginTop: 4 },
 });

@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   image: { width: 48, height: 48 },
-  tipo: { fontSize: 14, fontWeight: '600', color: theme.colors.text },
-  status: { fontSize: 12, marginTop: 2 },
+  tipo: { fontSize: 14,fontFamily: theme.fonts.regular, fontWeight: '600', color: theme.colors.text },
+  status: { fontSize: 12, fontFamily: theme.fonts.regular, marginTop: 2 },
   action: { paddingHorizontal: 10, paddingVertical: 6 },
-  actionText: { color: theme.colors.primary, fontWeight: '600' },
+  actionText: { color: theme.colors.primary,fontFamily: theme.fonts.regular, fontWeight: '600' },
 });

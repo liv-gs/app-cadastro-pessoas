@@ -17,48 +17,93 @@ export default function HomeScreen() {
       <Text style={styles.title}>Novo cadastro</Text>
       <Text style={styles.subtitle}>Escolha o tipo de pessoa que deseja cadastrar.</Text>
 
-      <TouchableOpacity
-        style={styles.card}
-        onPress={() => navigation.navigate('PessoaFisicaForm')}
-      >
-        <Ionicons name="person-outline" size={32} color={theme.colors.primary} />
-        <View style={styles.cardText}>
-          <Text style={styles.cardTitle}>Pessoa Física</Text>
-          <Text style={styles.cardDesc}>CPF, RG, contato e endereço</Text>
-        </View>
-        <Ionicons name="chevron-forward" size={20} color={theme.colors.muted} />
-      </TouchableOpacity>
+      <View style={styles.divider} />
 
-      <TouchableOpacity
-        style={styles.card}
-        onPress={() => navigation.navigate('PessoaJuridicaForm')}
-      >
-        <Ionicons name="business-outline" size={32} color={theme.colors.primary} />
-        <View style={styles.cardText}>
-          <Text style={styles.cardTitle}>Pessoa Jurídica</Text>
-          <Text style={styles.cardDesc}>CNPJ, empresa e representante legal</Text>
-        </View>
-        <Ionicons name="chevron-forward" size={20} color={theme.colors.muted} />
-      </TouchableOpacity>
+
+      <View style={styles.cardsContainer}>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('PessoaFisicaForm')}
+        >
+          <Ionicons name="person-outline" size={52} color={theme.colors.primary} />
+          <View style={styles.cardText}>
+            <Text style={styles.cardTitle}>Pessoa Física</Text>
+            <Text style={styles.cardDesc}>CPF, RG, contato e endereço</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('PessoaJuridicaForm')}
+        >
+          <Ionicons name="business-outline" size={52} color={theme.colors.primary} />
+          <View style={styles.cardText}>
+            <Text style={styles.cardTitle}>Pessoa Jurídica</Text>
+            <Text style={styles.cardDesc}>CNPJ, empresa e representante legal</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: theme.colors.background, padding: theme.spacing.lg },
-  title: { fontSize: 26, fontWeight: '700', color: theme.colors.text, marginTop: theme.spacing.md },
-  subtitle: { fontSize: 15, color: theme.colors.muted, marginBottom: theme.spacing.lg, marginTop: theme.spacing.xs },
+  title: { 
+    fontSize: 30, 
+    fontFamily: theme.fonts.semiBold,
+    color: theme.colors.text, 
+    marginTop: theme.spacing.md 
+  },
+
+  subtitle: { 
+    fontSize: 13, 
+    fontFamily: theme.fonts.regular,
+    color: theme.colors.muted ,
+    
+  },
+
   card: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: theme.colors.card,
     borderRadius: theme.radius.md,
     borderWidth: 1,
     borderColor: theme.colors.border,
+    height: 190,
     padding: theme.spacing.md,
-    marginBottom: theme.spacing.md,
   },
-  cardText: { flex: 1, marginLeft: theme.spacing.md },
-  cardTitle: { fontSize: 17, fontWeight: '600', color: theme.colors.text },
-  cardDesc: { fontSize: 13, color: theme.colors.muted, marginTop: 2 },
+  cardText: {
+    alignItems: 'center',
+    marginTop: theme.spacing.md,
+  },
+  cardTitle: {
+    fontSize: 19,
+    fontWeight: '700',
+    color: theme.colors.text,
+    textAlign: 'center',
+    fontFamily: theme.fonts.regular,
+  },
+  cardDesc: {
+    fontSize: 14,
+    color: theme.colors.muted,
+    marginTop: theme.spacing.xs,
+    marginBottom:15,
+    textAlign: 'center',
+  },
+  divider: {
+    height: 1.5,
+    backgroundColor: theme.colors.border,
+    width: '100%',
+    marginTop: theme.spacing.md,
+    marginBottom: theme.spacing.xl,
+  },
+  cardsContainer: {
+  flex: 1,
+  marginTop:50,
+  gap: theme.spacing.lg,
+},
+
 });

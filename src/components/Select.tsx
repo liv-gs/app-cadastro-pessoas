@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius.sm,
     paddingHorizontal: 12,
     paddingVertical: 12,
+    
   },
   error: { color: theme.colors.danger, fontSize: 12, marginTop: 4 },
   overlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', justifyContent: 'flex-end' },

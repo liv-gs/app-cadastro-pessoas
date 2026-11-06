@@ -10,5 +10,12 @@ export const theme = {
     success: '#16A34A',
   },
   spacing: { xs: 4, sm: 8, md: 16, lg: 24, xl: 32 },
-  radius: { sm: 8, md: 12 },
+  radius: { sm: 8, md: 20 },
+
+  fonts: {
+    regular: 'Poppins_400Regular',
+    medium: 'Poppins_500Medium',
+    semiBold: 'Poppins_600SemiBold',
+    bold: 'Poppins_700Bold',
+  },
 };

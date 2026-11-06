@@ -24,6 +24,10 @@ function Tabs() {
       screenOptions={({ route }) => ({
         headerShown:false,
         tabBarActiveTintColor: theme.colors.primary,
+        tabBarLabelStyle: {
+          fontFamily: 'Poppins_500Medium',
+          fontSize: 11,
+        },
         tabBarIcon: ({ color, size }) => (
           <Ionicons
             name={route.name === 'Home' ? 'add-circle-outline' : 'list-outline'}
@@ -42,7 +46,21 @@ function Tabs() {
 export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+            headerTitleStyle: {
+              fontFamily: 'Poppins_600SemiBold',
+              fontSize: 18,
+            },
+            headerTintColor: theme.colors.text,
+            headerStyle: {
+              backgroundColor: theme.colors.background,
+            },
+            headerBackTitleStyle: {
+              fontFamily: 'Poppins_400Regular',
+            },
+          }}
+        >
         <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
         <Stack.Screen name="PessoaFisicaForm" component={PessoaFisicaFormScreen} options={{ title: 'Pessoa Física' }} />
         <Stack.Screen name="PessoaJuridicaForm" component={PessoaJuridicaFormScreen} options={{ title: 'Pessoa Jurídica' }} />

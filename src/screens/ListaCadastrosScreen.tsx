@@ -50,6 +50,8 @@ export default function ListaCadastrosScreen() {
     <SafeAreaView style={styles.container} edges={['top']}>
       <Text style={styles.title}>Cadastros</Text>
 
+      <View style={styles.divider} />
+
       <TextInput
         style={styles.busca}
         placeholder="Buscar por nome, CPF ou CNPJ"
@@ -88,8 +90,8 @@ export default function ListaCadastrosScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: theme.colors.background, paddingHorizontal: theme.spacing.md },
-  title: { fontSize: 26, fontWeight: '700', color: theme.colors.text, marginTop: theme.spacing.md, marginBottom: theme.spacing.md },
+  container: { flex: 1, backgroundColor: theme.colors.background, padding: theme.spacing.lg, },
+  title: { fontSize: 30, fontWeight: '700', color: theme.colors.text, marginTop: theme.spacing.md, marginBottom: theme.spacing.md, fontFamily: theme.fonts.semiBold, },
   busca: {
     backgroundColor: theme.colors.card,
     borderWidth: 1,
@@ -99,11 +101,18 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     fontSize: 15,
     color: theme.colors.text,
-    marginBottom: theme.spacing.sm + 4,
+    marginBottom: 20,
+    fontFamily: theme.fonts.regular,
   },
-  filtros: { flexDirection: 'row', gap: 8, marginBottom: theme.spacing.md },
+  filtros: { flexDirection: 'row', gap: 8, marginBottom:20 },
   chip: { paddingHorizontal: 14, paddingVertical: 7, borderRadius: 20, borderWidth: 1, borderColor: theme.colors.border, backgroundColor: theme.colors.card },
   chipAtivo: { backgroundColor: theme.colors.primary, borderColor: theme.colors.primary },
-  chipText: { fontSize: 13, fontWeight: '600', color: theme.colors.text },
-  vazio: { textAlign: 'center', color: theme.colors.muted, marginTop: theme.spacing.xl },
+  chipText: { fontFamily: theme.fonts.regular,fontSize: 13, fontWeight: '600', color: theme.colors.text },
+  vazio: { textAlign: 'center',fontFamily: 'Poppins_400Regular', color: theme.colors.muted, marginTop: theme.spacing.xl },
+  divider: {
+    height: 1.5,
+    backgroundColor: theme.colors.border,
+    width: '100%',
+    marginBottom: theme.spacing.xl,
+  },
 });

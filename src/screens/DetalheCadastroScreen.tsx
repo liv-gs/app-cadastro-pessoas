@@ -114,9 +114,9 @@ export default function DetalheCadastroScreen() {
 }
 
 const styles = StyleSheet.create({
-  titulo: { fontSize: 22, fontWeight: '700', color: theme.colors.text },
-  tipo: { fontSize: 14, color: theme.colors.muted, marginTop: 2 },
+  titulo: { fontSize: 22,fontFamily: theme.fonts.regular, fontWeight: '700', color: theme.colors.text },
+  tipo: { fontSize: 12,fontFamily: theme.fonts.regular, color: theme.colors.muted, marginTop: 2 },
   linha: { backgroundColor: theme.colors.card, borderWidth: 1, borderColor: theme.colors.border, borderRadius: theme.radius.sm, padding: 12, marginBottom: 8 },
-  label: { fontSize: 12, color: theme.colors.muted },
-  valor: { fontSize: 15, color: theme.colors.text, marginTop: 2 },
+  label: { fontSize: 10, color: theme.colors.muted, fontFamily: theme.fonts.regular, },
+  valor: { fontSize: 13, color: theme.colors.text, marginTop: 2, fontFamily: theme.fonts.regular,},
 });

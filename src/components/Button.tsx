@@ -36,9 +36,9 @@ export default function Button({ title, onPress, variant = 'primary', loading, d
 const styles = StyleSheet.create({
   button: {
     borderRadius: theme.radius.sm,
-    paddingVertical: 14,
+    paddingVertical: 12,
     alignItems: 'center',
     marginBottom: theme.spacing.sm,
   },
-  text: { fontSize: 16, fontWeight: '600' },
+  text: { fontSize: 13, fontWeight: '600',fontFamily: theme.fonts.medium, },
 });
