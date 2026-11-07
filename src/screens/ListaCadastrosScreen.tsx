@@ -88,11 +88,19 @@ export default function ListaCadastrosScreen() {
     );
   }
 
-  
-
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-      <Text style={styles.title}>Cadastros</Text>
+      <View style={styles.header}>
+        <Text style={styles.eyebrow}>LISTAGEM</Text>
+
+        <Text style={styles.title}>Cadastros</Text>
+
+        <Text style={styles.subtitle}>
+          Busque e consulte os cadastros realizados.
+        </Text>
+      </View>
+
+      <View style={styles.divider} />
 
       <TextInput
         style={styles.busca}
@@ -108,8 +116,9 @@ export default function ListaCadastrosScreen() {
             key={f.id}
             style={[styles.chip, filtro === f.id && styles.chipAtivo]}
             onPress={() => setFiltro(f.id)}
+            activeOpacity={0.75}
           >
-            <Text style={[styles.chipText, filtro === f.id && { color: '#fff' }]}>{f.label}</Text>
+            <Text style={[styles.chipText, filtro === f.id && styles.chipTextAtivo]}>{f.label}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -121,6 +130,7 @@ export default function ListaCadastrosScreen() {
           <CadastroCard cadastro={item} onPress={() => navigation.navigate('DetalheCadastro', { cadastroId: item.id })} />
         )}
         ListEmptyComponent={vazio}
+        keyboardShouldPersistTaps="handled"
         refreshControl={
           <RefreshControl
             refreshing={atualizando}
@@ -128,15 +138,53 @@ export default function ListaCadastrosScreen() {
             colors={[theme.colors.primary]}
           />
         }
-        contentContainerStyle={{ paddingBottom: theme.spacing.lg }}
+        contentContainerStyle={{ paddingBottom: theme.spacing.xl * 2 }}
       />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: theme.colors.background, paddingHorizontal: theme.spacing.md },
-  title: { fontSize: 26, fontWeight: '700', color: theme.colors.text, marginTop: theme.spacing.md, marginBottom: theme.spacing.md },
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+    padding: theme.spacing.lg,
+  },
+
+  header: {
+    marginTop: theme.spacing.md,
+  },
+
+  eyebrow: {
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 2,
+    color: theme.colors.primary,
+    marginBottom: 5,
+  },
+
+  title: {
+    fontSize: 30,
+    fontFamily: theme.fonts.semiBold,
+    color: theme.colors.text,
+    letterSpacing: -0.5,
+  },
+
+  subtitle: {
+    fontSize: 14,
+    fontFamily: theme.fonts.regular,
+    color: theme.colors.muted,
+    marginTop: 5,
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: theme.colors.border,
+    width: '100%',
+    marginTop: theme.spacing.md,
+    marginBottom: theme.spacing.lg,
+  },
+
   busca: {
     backgroundColor: theme.colors.card,
     borderWidth: 1,
@@ -145,13 +193,31 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 15,
+    fontFamily: theme.fonts.regular,
     color: theme.colors.text,
     marginBottom: theme.spacing.sm + 4,
   },
+
   filtros: { flexDirection: 'row', gap: 8, marginBottom: theme.spacing.md },
-  chip: { paddingHorizontal: 14, paddingVertical: 7, borderRadius: 20, borderWidth: 1, borderColor: theme.colors.border, backgroundColor: theme.colors.card },
+
+  chip: {
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    backgroundColor: theme.colors.card,
+  },
   chipAtivo: { backgroundColor: theme.colors.primary, borderColor: theme.colors.primary },
-  chipText: { fontSize: 13, fontWeight: '600', color: theme.colors.text },
+  chipText: { fontSize: 13, fontFamily: theme.fonts.semiBold, color: theme.colors.text },
+  chipTextAtivo: { color: '#fff' },
+
   centro: { alignItems: 'center', marginTop: theme.spacing.xl, paddingHorizontal: theme.spacing.md },
-  vazio: { textAlign: 'center', color: theme.colors.muted, marginTop: theme.spacing.md, marginBottom: theme.spacing.md },
+  vazio: {
+    textAlign: 'center',
+    fontFamily: theme.fonts.regular,
+    color: theme.colors.muted,
+    marginTop: theme.spacing.md,
+    marginBottom: theme.spacing.md,
+  },
 });

@@ -3,7 +3,6 @@ import { View, Text, ScrollView, Modal, TouchableOpacity, Alert, ActivityIndicat
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as ImagePicker from 'expo-image-picker';
-import * as DocumentPicker from 'expo-document-picker';
 import { Ionicons } from '@expo/vector-icons';
 
 import { theme } from '../theme';
@@ -14,7 +13,7 @@ import DocumentoItem from '../components/DocumentoItem';
 import Button from '../components/Button';
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
-type Origem = 'camera' | 'galeria' | 'arquivo';
+type Origem = 'camera' | 'galeria';
 type Arquivo = { tipo: string; nome: string; uri: string; mimeType?: string };
 
 export default function DocumentosScreen() {
@@ -54,20 +53,11 @@ export default function DocumentosScreen() {
           const a = r.assets[0];
           arquivo = { tipo, nome: a.fileName ?? `${tipo}.jpg`, uri: a.uri, mimeType: a.mimeType ?? 'image/jpeg' };
         }
-      } else if (origem === 'galeria') {
+      } else {
         const r = await ImagePicker.launchImageLibraryAsync({ quality: 0.7 });
         if (!r.canceled) {
           const a = r.assets[0];
           arquivo = { tipo, nome: a.fileName ?? `${tipo}.jpg`, uri: a.uri, mimeType: a.mimeType ?? 'image/jpeg' };
-        }
-      } else {
-        const r = await DocumentPicker.getDocumentAsync({
-          type: ['application/pdf', 'image/*'],
-          copyToCacheDirectory: true,
-        });
-        if (!r.canceled) {
-          const a = r.assets[0];
-          arquivo = { tipo, nome: a.name, uri: a.uri, mimeType: a.mimeType };
         }
       }
 
@@ -164,7 +154,6 @@ export default function DocumentosScreen() {
             {([
               ['camera', 'camera-outline', 'Tirar foto'],
               ['galeria', 'image-outline', 'Escolher da galeria'],
-              ['arquivo', 'document-outline', 'Selecionar arquivo (PDF ou imagem)'],
             ] as const).map(([origem, icone, label]) => (
               <TouchableOpacity key={origem} style={styles.option} onPress={() => anexar(tipoSelecionado!, origem)}>
                 <Ionicons name={icone} size={22} color={theme.colors.primary} />

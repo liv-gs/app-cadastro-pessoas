@@ -19,7 +19,7 @@ const PASSOS = [
   {
     icone: 'document-attach-outline' as const,
     titulo: 'Anexe os documentos',
-    texto: 'Envie os documentos exigidos por foto, galeria ou arquivo PDF.',
+    texto: 'Envie os documentos exigidos por foto.',
   },
   {
     icone: 'list-outline' as const,
