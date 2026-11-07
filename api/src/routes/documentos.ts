@@ -23,6 +23,7 @@ documentosRouter.post('/', upload.single('arquivo'), async (req, res) => {
   if (!req.file || !tipo) {
     return res.status(400).json({ erro: 'Envie o arquivo (PDF ou imagem) e o tipo do documento' });
   }
+  const nome = (req.body.nome as string) || req.file.originalname;
 
   const existe = await pool.query('SELECT 1 FROM cadastros WHERE id = $1', [cadastroId]);
   if (!existe.rowCount) return res.status(404).json({ erro: 'Cadastro não encontrado' });
@@ -32,13 +33,13 @@ documentosRouter.post('/', upload.single('arquivo'), async (req, res) => {
   const docId = randomUUID();
   await pool.query(
     'INSERT INTO documentos (id, cadastro_id, tipo, nome, conteudo, mime_type) VALUES ($1,$2,$3,$4,$5,$6)',
-    [docId, cadastroId, tipo, req.file.originalname, req.file.buffer, req.file.mimetype]
+    [docId, cadastroId, tipo, nome, req.file.buffer, req.file.mimetype]
   );
 
   res.status(201).json({
     id: docId,
     tipo,
-    nome: req.file.originalname,
+    nome,
     uri: `/uploads/${docId}`,
     mimeType: req.file.mimetype,
   });

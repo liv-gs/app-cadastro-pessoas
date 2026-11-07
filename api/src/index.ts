@@ -10,6 +10,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Chave de API: se API_KEY não estiver definida (ex.: teste local), não exige
+const API_KEY = process.env.API_KEY;
+app.use((req, res, next) => {
+  if (!API_KEY || req.path === '/saude') return next();
+  if (req.header('x-api-key') !== API_KEY) {
+    return res.status(401).json({ erro: 'Não autorizado' });
+  }
+  next();
+});
+
 app.get('/saude', (_req, res) => res.json({ ok: true }));
 app.use('/uploads', arquivosRouter);
 app.use('/cadastros', cadastrosRouter);
