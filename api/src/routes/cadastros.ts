@@ -7,7 +7,7 @@ export const cadastrosRouter = Router();
 
 async function montar(row: any) {
   const docs = await pool.query(
-    'SELECT id, tipo, nome, arquivo, mime_type FROM documentos WHERE cadastro_id = $1',
+    'SELECT id, tipo, nome, mime_type FROM documentos WHERE cadastro_id = $1',
     [row.id]
   );
   return {
@@ -18,7 +18,7 @@ async function montar(row: any) {
       id: d.id,
       tipo: d.tipo,
       nome: d.nome,
-      uri: `/uploads/${d.arquivo}`,
+      uri: `/uploads/${d.id}`,
       mimeType: d.mime_type ?? undefined,
     })),
   };

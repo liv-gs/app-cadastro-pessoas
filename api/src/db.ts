@@ -2,6 +2,8 @@ import { Pool } from 'pg';
 
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  // Só necessário para bancos externos (Neon, Supabase). Na URL interna do Render não precisa.
+  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined,
 });
 
 export async function iniciarBanco() {
@@ -18,7 +20,7 @@ export async function iniciarBanco() {
       cadastro_id  UUID NOT NULL REFERENCES cadastros(id) ON DELETE CASCADE,
       tipo         TEXT NOT NULL,
       nome         TEXT NOT NULL,
-      arquivo      TEXT NOT NULL,
+      conteudo     BYTEA NOT NULL,
       mime_type    TEXT
     );
   `);

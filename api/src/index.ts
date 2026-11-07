@@ -3,15 +3,15 @@ import express from 'express';
 import cors from 'cors';
 import { iniciarBanco } from './db';
 import { cadastrosRouter } from './routes/cadastros';
-import { documentosRouter, PASTA_UPLOADS } from './routes/documentos';
+import { documentosRouter, arquivosRouter } from './routes/documentos';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/uploads', express.static(PASTA_UPLOADS));
 
 app.get('/saude', (_req, res) => res.json({ ok: true }));
+app.use('/uploads', arquivosRouter);
 app.use('/cadastros', cadastrosRouter);
 app.use('/cadastros/:id/documentos', documentosRouter);
 
