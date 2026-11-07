@@ -14,7 +14,10 @@
       "versionCode": 1,
       "softwareKeyboardLayoutMode": "resize",
       "predictiveBackGestureEnabled": false,
-      "permissions": ["CAMERA"],
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/perfil.png",
         "backgroundColor": "#FFFFFF"
@@ -37,6 +40,11 @@
           "photosPermission": "O app precisa acessar suas fotos para anexar documentos."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "0e14169d-c072-4a0a-aa8f-9994f03c7345"
+      }
+    }
   }
 }
