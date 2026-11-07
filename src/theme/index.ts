@@ -8,6 +8,8 @@ export const theme = {
     border: '#E5E7EB',
     danger: '#DC2626',
     success: '#16A34A',
+    lilas: '#B79CED',
+    lilasEscuro: '#4B2E83',
   },
   spacing: { xs: 4, sm: 8, md: 16, lg: 24, xl: 32 },
   radius: { sm: 8, md: 20 },
