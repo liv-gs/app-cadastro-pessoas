@@ -1,11 +1,18 @@
 {
   "expo": {
-    "name": "app-teste",
+    "name": "",
     "slug": "app-teste",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+
+    "splash": {
+      "image": "./assets/imagem2.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+
     "ios": {
       "supportsTablet": true
     },
