@@ -10,8 +10,7 @@ import { theme } from '../theme';
 import type { RootStackParamList } from '../navigation/types';
 import { pfSchema, PFFormData } from '../validators/schemas';
 import { maskCPF, maskDate, maskPhone } from '../utils/masks';
-import { buscarCadastro, salvarCadastro, novoId } from '../storage/cadastroStorage';
-import type { PessoaFisica } from '../types/cadastro';
+import { buscarCadastro, salvarCadastro } from '../storage/cadastroStorage';
 
 import FormField from '../components/FormField';
 import EnderecoFields from '../components/EnderecoFields';
@@ -37,37 +36,31 @@ export default function PessoaFisicaFormScreen() {
   });
 
   useEffect(() => {
-    if (!cadastroId) return;
-    buscarCadastro(cadastroId).then((c) => {
+  if (!cadastroId) return;
+  buscarCadastro(cadastroId)
+    .then((c) => {
       if (c && c.tipo === 'PF') {
         reset({
           nome: c.nome, cpf: c.cpf, rg: c.rg, dataNascimento: c.dataNascimento,
           email: c.email, telefone: c.telefone, endereco: c.endereco,
         });
       }
-    });
-  }, [cadastroId, reset]);
+    })
+    .catch((e) => Alert.alert('Erro', e?.message ?? 'Não foi possível carregar o cadastro.'));
+}, [cadastroId, reset]);
 
   async function onSubmit(data: PFFormData) {
     try {
       setSalvando(true);
-      const existente = cadastroId ? await buscarCadastro(cadastroId) : undefined;
-      const cadastro: PessoaFisica = {
-        ...data,
-        id: cadastroId ?? novoId(),
-        tipo: 'PF',
-        documentos: existente?.documentos ?? [],
-        criadoEm: existente?.criadoEm ?? new Date().toISOString(),
-      };
-      await salvarCadastro(cadastro);
+      const salvo = await salvarCadastro({ ...data, tipo: 'PF' }, cadastroId);
       if (cadastroId) navigation.goBack();
-      else navigation.replace('Documentos', { cadastroId: cadastro.id });
-    } catch {
-      Alert.alert('Erro', 'Não foi possível salvar o cadastro.');
+      else navigation.replace('Documentos', { cadastroId: salvo.id });
+    } catch (e: any) {
+      Alert.alert('Erro', e?.message ?? 'Não foi possível salvar o cadastro.');
     } finally {
       setSalvando(false);
     }
-  }
+  } 
 
   return (
     <KeyboardAwareScrollView

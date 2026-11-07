@@ -29,7 +29,9 @@ export default function DetalheCadastroScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      buscarCadastro(cadastroId).then((r) => setC(r ?? null));
+      buscarCadastro(cadastroId)
+        .then((r) => setC(r ?? null))
+        .catch((e) => Alert.alert('Erro', e?.message ?? 'Não foi possível carregar o cadastro.'));
     }, [cadastroId])
   );
 
@@ -45,8 +47,12 @@ export default function DetalheCadastroScreen() {
         text: 'Excluir',
         style: 'destructive',
         onPress: async () => {
-          await removerCadastro(cadastroId);
-          navigation.goBack();
+          try {
+            await removerCadastro(cadastroId);
+            navigation.goBack();
+          } catch (e: any) {
+            Alert.alert('Erro', e?.message ?? 'Não foi possível excluir o cadastro.');
+          }
         },
       },
     ]);

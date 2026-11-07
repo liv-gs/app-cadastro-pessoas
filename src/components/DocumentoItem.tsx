@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { theme } from '../theme';
 import type { Documento } from '../types/cadastro';
+import { API_KEY } from '../config';
 
 interface Props {
   tipo: string;
@@ -17,7 +18,10 @@ export default function DocumentoItem({ tipo, documento, onAnexar, onRemover }: 
     <View style={styles.card}>
       <View style={styles.thumb}>
         {documento && isImagem ? (
-          <Image source={{ uri: documento.uri }} style={styles.image} />
+          <Image
+            source={{ uri: documento.uri, headers: { 'x-api-key': API_KEY } }}
+            style={styles.image}
+          />
         ) : (
           <Ionicons
             name={documento ? 'document-text' : 'cloud-upload-outline'}

@@ -10,8 +10,8 @@ import { theme } from '../theme';
 import type { RootStackParamList } from '../navigation/types';
 import { pjSchema, PJFormData } from '../validators/schemas';
 import { maskCNPJ, maskCPF, maskDate, maskPhone } from '../utils/masks';
-import { buscarCadastro, listarCadastros, salvarCadastro, novoId } from '../storage/cadastroStorage';
-import type { PessoaFisica, PessoaJuridica } from '../types/cadastro';
+import { listarCadastros, salvarCadastro } from '../storage/cadastroStorage';
+import type { PessoaFisica } from '../types/cadastro';
 
 import FormField from '../components/FormField';
 import EnderecoFields from '../components/EnderecoFields';
@@ -45,24 +45,28 @@ export default function PessoaJuridicaFormScreen() {
 
   useEffect(() => {
     async function carregar() {
-      const lista = await listarCadastros();
-      const pfs = lista.filter((c): c is PessoaFisica => c.tipo === 'PF');
-      setPessoas(pfs);
+      try {
+        const lista = await listarCadastros();
+        const pfs = lista.filter((c): c is PessoaFisica => c.tipo === 'PF');
+        setPessoas(pfs);
 
-      if (!cadastroId) return;
-      const c = lista.find((x) => x.id === cadastroId);
-      if (c && c.tipo === 'PJ') {
-        reset({
-          razaoSocial: c.razaoSocial, nomeFantasia: c.nomeFantasia, cnpj: c.cnpj,
-          inscricaoEstadual: c.inscricaoEstadual, dataAbertura: c.dataAbertura,
-          email: c.email, telefone: c.telefone, endereco: c.endereco, representante: c.representante,
-        });
-        const igual = pfs.find((p) => p.cpf === c.representante.cpf);
-        if (igual) setSelecionadoId(igual.id);
+        if (!cadastroId) return;
+        const c = lista.find((x) => x.id === cadastroId);
+        if (c && c.tipo === 'PJ') {
+          reset({
+            razaoSocial: c.razaoSocial, nomeFantasia: c.nomeFantasia, cnpj: c.cnpj,
+            inscricaoEstadual: c.inscricaoEstadual, dataAbertura: c.dataAbertura,
+            email: c.email, telefone: c.telefone, endereco: c.endereco, representante: c.representante,
+          });
+          const igual = pfs.find((p) => p.cpf === c.representante.cpf);
+          if (igual) setSelecionadoId(igual.id);
+        }
+      } catch (e: any) {
+        Alert.alert('Erro', e?.message ?? 'Não foi possível carregar os dados.');
       }
     }
     carregar();
-  }, [cadastroId, reset]);
+  }, [cadastroId, reset]);;
 
   function escolherRepresentante(pf: PessoaFisica | null) {
     setModalAberto(false);
@@ -90,19 +94,11 @@ export default function PessoaJuridicaFormScreen() {
   async function onSubmit(data: PJFormData) {
     try {
       setSalvando(true);
-      const existente = cadastroId ? await buscarCadastro(cadastroId) : undefined;
-      const cadastro: PessoaJuridica = {
-        ...data,
-        id: cadastroId ?? novoId(),
-        tipo: 'PJ',
-        documentos: existente?.documentos ?? [],
-        criadoEm: existente?.criadoEm ?? new Date().toISOString(),
-      };
-      await salvarCadastro(cadastro);
+      const salvo = await salvarCadastro({ ...data, tipo: 'PJ' }, cadastroId);
       if (cadastroId) navigation.goBack();
-      else navigation.replace('Documentos', { cadastroId: cadastro.id });
-    } catch {
-      Alert.alert('Erro', 'Não foi possível salvar o cadastro.');
+      else navigation.replace('Documentos', { cadastroId: salvo.id });
+    } catch (e: any) {
+      Alert.alert('Erro', e?.message ?? 'Não foi possível salvar o cadastro.');
     } finally {
       setSalvando(false);
     }
