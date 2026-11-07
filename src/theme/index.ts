@@ -1,9 +1,9 @@
 export const theme = {
   colors: {
-    primary: '#1F6FEB',
+    primary: '#776ef1',
     background: '#F5F7FA',
     card: '#FFFFFF',
-    text: '#1B1F24',
+    text: '#292b2c',
     muted: '#6B7280',
     border: '#E5E7EB',
     danger: '#DC2626',

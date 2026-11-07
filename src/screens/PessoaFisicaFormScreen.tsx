@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ScrollView, KeyboardAvoidingView, Platform, StyleSheet, Alert } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
@@ -69,23 +70,30 @@ export default function PessoaFisicaFormScreen() {
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-        <SectionTitle>Dados pessoais</SectionTitle>
-        <FormField control={control} name="nome" label="Nome completo" autoCapitalize="words" />
-        <FormField control={control} name="cpf" label="CPF" mask={maskCPF} keyboardType="numeric" placeholder="000.000.000-00" />
-        <FormField control={control} name="rg" label="RG" />
-        <FormField control={control} name="dataNascimento" label="Data de nascimento" mask={maskDate} keyboardType="numeric" placeholder="dd/mm/aaaa" />
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+      enableOnAndroid
+      extraScrollHeight={20}
+    >
+      <SectionTitle>Dados pessoais</SectionTitle>
+      <FormField control={control} name="nome" label="Nome completo" autoCapitalize="words" />
+      <FormField control={control} name="cpf" label="CPF" mask={maskCPF} keyboardType="numeric" placeholder="000.000.000-00" />
+      <FormField control={control} name="rg" label="RG" />
+      <FormField control={control} name="dataNascimento" label="Data de nascimento" mask={maskDate} keyboardType="numeric" placeholder="dd/mm/aaaa" />
 
-        <SectionTitle>Contato</SectionTitle>
-        <FormField control={control} name="email" label="E-mail" keyboardType="email-address" autoCapitalize="none" />
-        <FormField control={control} name="telefone" label="Telefone" mask={maskPhone} keyboardType="phone-pad" placeholder="(00) 00000-0000" />
+      <SectionTitle>Contato</SectionTitle>
+      <FormField control={control} name="email" label="E-mail" keyboardType="email-address" autoCapitalize="none" />
+      <FormField control={control} name="telefone" label="Telefone" mask={maskPhone} keyboardType="phone-pad" placeholder="(00) 00000-0000" />
 
-        <EnderecoFields control={control} setValue={setValue} />
+      <EnderecoFields control={control} setValue={setValue} />
 
-        <Button title={cadastroId ? 'Salvar alterações' : 'Salvar e anexar documentos'} onPress={handleSubmit(onSubmit)} loading={salvando} />
-      </ScrollView>
-    </KeyboardAvoidingView>
+      <Button
+        title={cadastroId ? 'Salvar alterações' : 'Salvar e anexar documentos'}
+        onPress={handleSubmit(onSubmit)}
+        loading={salvando}
+      />
+    </KeyboardAwareScrollView>
   );
 }
 

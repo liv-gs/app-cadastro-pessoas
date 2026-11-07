@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { ScrollView, KeyboardAvoidingView, Platform, StyleSheet, Alert } from 'react-native';
+import {StyleSheet, Alert } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
@@ -72,31 +73,38 @@ export default function PessoaJuridicaFormScreen() {
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-        <SectionTitle>Dados da empresa</SectionTitle>
-        <FormField control={control} name="razaoSocial" label="Razão social" autoCapitalize="words" />
-        <FormField control={control} name="nomeFantasia" label="Nome fantasia" autoCapitalize="words" />
-        <FormField control={control} name="cnpj" label="CNPJ" mask={maskCNPJ} keyboardType="numeric" placeholder="00.000.000/0000-00" />
-        <FormField control={control} name="inscricaoEstadual" label="Inscrição estadual (opcional)" />
-        <FormField control={control} name="dataAbertura" label="Data de abertura" mask={maskDate} keyboardType="numeric" placeholder="dd/mm/aaaa" />
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+      enableOnAndroid
+      extraScrollHeight={20}
+    >
+      <SectionTitle>Dados da empresa</SectionTitle>
+      <FormField control={control} name="razaoSocial" label="Razão social" autoCapitalize="words" />
+      <FormField control={control} name="nomeFantasia" label="Nome fantasia" autoCapitalize="words" />
+      <FormField control={control} name="cnpj" label="CNPJ" mask={maskCNPJ} keyboardType="numeric" placeholder="00.000.000/0000-00" />
+      <FormField control={control} name="inscricaoEstadual" label="Inscrição estadual (opcional)" />
+      <FormField control={control} name="dataAbertura" label="Data de abertura" mask={maskDate} keyboardType="numeric" placeholder="dd/mm/aaaa" />
 
-        <SectionTitle>Contato da empresa</SectionTitle>
-        <FormField control={control} name="email" label="E-mail" keyboardType="email-address" autoCapitalize="none" />
-        <FormField control={control} name="telefone" label="Telefone" mask={maskPhone} keyboardType="phone-pad" placeholder="(00) 00000-0000" />
+      <SectionTitle>Contato da empresa</SectionTitle>
+      <FormField control={control} name="email" label="E-mail" keyboardType="email-address" autoCapitalize="none" />
+      <FormField control={control} name="telefone" label="Telefone" mask={maskPhone} keyboardType="phone-pad" placeholder="(00) 00000-0000" />
 
-        <EnderecoFields control={control} setValue={setValue} />
+      <EnderecoFields control={control} setValue={setValue} />
 
-        <SectionTitle>Representante legal</SectionTitle>
-        <FormField control={control} name="representante.nome" label="Nome completo" autoCapitalize="words" />
-        <FormField control={control} name="representante.cpf" label="CPF" mask={maskCPF} keyboardType="numeric" placeholder="000.000.000-00" />
-        <FormField control={control} name="representante.cargo" label="Cargo" />
-        <FormField control={control} name="representante.email" label="E-mail" keyboardType="email-address" autoCapitalize="none" />
-        <FormField control={control} name="representante.telefone" label="Telefone" mask={maskPhone} keyboardType="phone-pad" placeholder="(00) 00000-0000" />
+      <SectionTitle>Representante legal</SectionTitle>
+      <FormField control={control} name="representante.nome" label="Nome completo" autoCapitalize="words" />
+      <FormField control={control} name="representante.cpf" label="CPF" mask={maskCPF} keyboardType="numeric" placeholder="000.000.000-00" />
+      <FormField control={control} name="representante.cargo" label="Cargo" />
+      <FormField control={control} name="representante.email" label="E-mail" keyboardType="email-address" autoCapitalize="none" />
+      <FormField control={control} name="representante.telefone" label="Telefone" mask={maskPhone} keyboardType="phone-pad" placeholder="(00) 00000-0000" />
 
-        <Button title={cadastroId ? 'Salvar alterações' : 'Salvar e anexar documentos'} onPress={handleSubmit(onSubmit)} loading={salvando} />
-      </ScrollView>
-    </KeyboardAvoidingView>
+      <Button
+        title={cadastroId ? 'Salvar alterações' : 'Salvar e anexar documentos'}
+        onPress={handleSubmit(onSubmit)}
+        loading={salvando}
+      />
+    </KeyboardAwareScrollView>
   );
 }
 
