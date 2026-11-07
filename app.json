@@ -1,36 +1,42 @@
 {
   "expo": {
-    "name": "",
+    "name": "Cadastro de Pessoas",
     "slug": "app-teste",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-
-    "splash": {
-      "image": "./assets/imagem2.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#FFFFFF"
-    },
-
+    "icon": "./assets/perfil.png",
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "package": "com.livia.cadastroapp",
+      "versionCode": 1,
+      "softwareKeyboardLayoutMode": "resize",
+      "predictiveBackGestureEnabled": false,
+      "permissions": ["CAMERA"],
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "softwareKeyboardLayoutMode": "resize",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
-      },
-      "predictiveBackGestureEnabled": false
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+        "foregroundImage": "./assets/perfil.png",
+        "backgroundColor": "#FFFFFF"
+      }
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFFFFF",
+          "image": "./assets/perfil.png",
+          "imageWidth": 200
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "O app precisa da câmera para fotografar os documentos.",
+          "photosPermission": "O app precisa acessar suas fotos para anexar documentos."
+        }
+      ]
     ]
   }
 }
