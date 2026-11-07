@@ -9,9 +9,10 @@ export const arquivosRouter = Router();
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 },
-  fileFilter: (_req, file, cb) => {
-    const ok = file.mimetype === 'application/pdf' || file.mimetype.startsWith('image/');
-    cb(null, ok);
+    fileFilter: (_req, file, cb) => {
+    const ehPdf =
+      file.mimetype === 'application/pdf' || file.originalname.toLowerCase().endsWith('.pdf');
+    cb(null, ehPdf || file.mimetype.startsWith('image/'));
   },
 });
 
@@ -30,10 +31,11 @@ documentosRouter.post('/', upload.single('arquivo'), async (req, res) => {
 
   await pool.query('DELETE FROM documentos WHERE cadastro_id = $1 AND tipo = $2', [cadastroId, tipo]);
 
+  const mime = nome.toLowerCase().endsWith('.pdf') ? 'application/pdf' : req.file.mimetype;
   const docId = randomUUID();
   await pool.query(
     'INSERT INTO documentos (id, cadastro_id, tipo, nome, conteudo, mime_type) VALUES ($1,$2,$3,$4,$5,$6)',
-    [docId, cadastroId, tipo, nome, req.file.buffer, req.file.mimetype]
+    [docId, cadastroId, tipo, nome, req.file.buffer, mime]
   );
 
   res.status(201).json({
@@ -41,7 +43,7 @@ documentosRouter.post('/', upload.single('arquivo'), async (req, res) => {
     tipo,
     nome,
     uri: `/uploads/${docId}`,
-    mimeType: req.file.mimetype,
+    mimeType: mime,
   });
 });
 

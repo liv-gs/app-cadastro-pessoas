@@ -102,6 +102,16 @@ export async function removerCadastro(id: string): Promise<void> {
   await req<void>(`/cadastros/${id}`, { method: 'DELETE' });
 }
 
+function descobrirMime(nome: string, mime?: string) {
+  if (mime && mime !== 'application/octet-stream') return mime;
+  const ext = nome.split('.').pop()?.toLowerCase();
+  if (ext === 'pdf') return 'application/pdf';
+  if (ext === 'png') return 'image/png';
+  if (ext === 'jpg' || ext === 'jpeg') return 'image/jpeg';
+  if (ext === 'webp') return 'image/webp';
+  return 'application/octet-stream';
+}
+
 export async function enviarDocumento(
   cadastroId: string,
   arquivo: { tipo: string; nome: string; uri: string; mimeType?: string }
@@ -116,7 +126,7 @@ export async function enviarDocumento(
         httpMethod: 'POST',
         uploadType: FileSystem.FileSystemUploadType.MULTIPART,
         fieldName: 'arquivo',
-        mimeType: arquivo.mimeType ?? 'application/octet-stream',
+        mimeType: descobrirMime(arquivo.nome, arquivo.mimeType),
         parameters: { tipo: arquivo.tipo, nome: arquivo.nome },
         headers: { 'x-api-key': API_KEY },
       }
@@ -131,8 +141,8 @@ export async function enviarDocumento(
 
   if (resposta.status === 401) throw new ApiError('Acesso não autorizado ao servidor.', 401);
   if (resposta.status === 404) throw new ApiError('Cadastro não encontrado.', 404);
-  if (resposta.status < 200 || resposta.status >= 300) {
-    throw new ApiError('O servidor recusou o arquivo. Use PDF ou imagem de até 10 MB.', resposta.status);
+    if (resposta.status < 200 || resposta.status >= 300) {
+    console.log('Upload recusado:', resposta.status, resposta.body);
   }
 
   const doc = JSON.parse(resposta.body) as Documento;
