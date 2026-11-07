@@ -83,11 +83,9 @@ const styles = StyleSheet.create({
   zIndex: 999,
   elevation: 999,
 },
-  container: { flex: 1, padding: theme.spacing.lg, justifyContent: 'space-between' },
-  topo: { alignItems: 'center', marginTop: theme.spacing.xl },
   titulo: { fontSize: 30, fontWeight: '800', color: '#fff', marginTop: theme.spacing.sm },
   subtitulo: { fontSize: 16, color: '#fff', opacity: 0.9, marginTop: 4 },
-  passos: { gap: 14 },
+ 
   passo: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -106,12 +104,23 @@ const styles = StyleSheet.create({
   },
   passoTitulo: { fontSize: 16, fontWeight: '700', color: theme.colors.lilasEscuro },
   passoTexto: { fontSize: 13, color: theme.colors.lilasEscuro, marginTop: 2 },
-  botao: {
-    backgroundColor: '#fff',
-    borderRadius: 30,
-    paddingVertical: 16,
-    alignItems: 'center',
-    marginBottom: theme.spacing.md,
-  },
+  container: {
+  flex: 1,
+  padding: theme.spacing.lg,
+  justifyContent: 'flex-start',
+},
+topo: {
+  alignItems: 'center',
+  marginTop: theme.spacing.xl,
+  marginBottom: theme.spacing.lg,
+},
+passos: { gap: 14 },
+botao: {
+  backgroundColor: '#fff',
+  borderRadius: 30,
+  paddingVertical: 16,
+  alignItems: 'center',
+  marginTop: theme.spacing.xl, // distância entre os cards e o botão
+},
   botaoTexto: { fontSize: 18, fontWeight: '700', color: theme.colors.lilasEscuro },
 });
